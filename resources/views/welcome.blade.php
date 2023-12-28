@@ -49,5 +49,11 @@
                 </div>
             </div>
         </header>
+        <div id="app">
+            <test></test>
+        </div>
+        1
+        <i class="bi bi-arrow-counterclockwise"></i>2
+        <i class="bi bi-arrow-repeat"></i>3
     </body>
 </html>
