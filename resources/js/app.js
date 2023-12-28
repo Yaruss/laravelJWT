@@ -14,7 +14,8 @@ const app = createApp({
     }
 });
 
-app.component('test', (await import('./component/test.vue')).default);
+import test from './component/test.vue'
+app.component('test', test);
 
 app.use(store);
 app.mount('#app');
