@@ -4,6 +4,8 @@ import { createApp } from 'vue'
 
 import store from './store'
 
+window.store=store;
+
 const app = createApp({
     created() {
     },

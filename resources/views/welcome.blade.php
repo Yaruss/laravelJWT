@@ -52,8 +52,8 @@
         <div id="app">
             <test></test>
         </div>
-        1
-        <i class="bi bi-arrow-counterclockwise"></i>2
-        <i class="bi bi-arrow-repeat"></i>3
+        <i class="bi bi-arrow-counterclockwise" onclick="store.dispatch('inc2')"></i>
+        <i class="bi bi-arrow-repeat" onclick="store.commit('inc')"></i>
+
     </body>
 </html>
