@@ -19,6 +19,9 @@
             <modal title="login">
                 <login></login>
             </modal>
+            <modal title="task">
+                <task></task>
+            </modal>
             <test></test>
         </div>
     </body>

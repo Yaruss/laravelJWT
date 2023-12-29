@@ -6,7 +6,7 @@ export default createStore({
         token:{},
         login:{},
 
-        users:{},
+        task:{},
     },
     actions: {
         login(context, payload){

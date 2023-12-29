@@ -4,63 +4,60 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTasksRequest;
 use App\Http\Requests\UpdateTasksRequest;
+use App\Http\Resources\TaskResource;
 use App\Models\Tasks;
 
 class TasksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+    /*
+     * Method get ./api/data/task select all task
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
-    {
-        //
+    public function task(){
+        $task = Tasks::all();
+        $result = TaskResource::collection($task);
+        return response()->json($result);
     }
 
-    /**
-     * Show the form for creating a new resource.
+    /*
+     * Method get ./api/data/task{id} select 20 task on num page id
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
-    {
-        //
+    public function taskPage(){
+        $task = Tasks::all();
+        $result = TaskResource::collection($task);
+        return response()->json($result);
     }
 
-    /**
-     * Store a newly created resource in storage.
+    /*
+     * Method put ./api/data/task validation on StoreTasksRequest
+     * 'id' => 'required', 'title' => 'required', 'description' => 'required'
+     * id must belong to user
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreTasksRequest $request)
-    {
-        //
+    public function store(StoreTasksRequest $request){
+        dd($request);
+
+        $task = Tasks::all();
+        $result = TaskResource::collection($task);
+        return response()->json($result);
     }
 
-    /**
-     * Display the specified resource.
+    /*
+     * Method post ./api/data/task validation on UpdateTasksRequest
+     * 'id' => 'required', 'title' => 'required', 'description' => 'required'
+     * id must belong to user
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Tasks $tasks)
-    {
-        //
-    }
+    public function update(UpdateTasksRequest $request){
+        dd($request);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tasks $tasks)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTasksRequest $request, Tasks $tasks)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tasks $tasks)
-    {
-        //
+        $task = Tasks::all();
+        $result = TaskResource::collection($task);
+        return response()->json($result);
     }
 }

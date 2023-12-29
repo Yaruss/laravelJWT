@@ -6,7 +6,9 @@ import store from './store'
 
 window.store=store;
 
+import vueRootMixin from "./rootMixin";
 const app = createApp({
+    mixins:[vueRootMixin],
     created() {
     },
     mounted() {
@@ -26,6 +28,8 @@ app.component('modal', modal);
 import login from './component/login.vue'
 app.component('login', login);
 
+import task from './component/task.vue'
+app.component('task', task);
 
 app.use(store);
 app.mount('#app');
