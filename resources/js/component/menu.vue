@@ -6,6 +6,7 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-4">
             <li><a href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal" data-bs-target="#task">Tasks</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal" data-bs-target="#tasknew">Tasks new</a></li>
         </ul>
 
         <div class="dropdown text-end">

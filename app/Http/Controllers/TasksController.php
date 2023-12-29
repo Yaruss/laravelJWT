@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyTasksRequest;
 use App\Http\Requests\StoreTasksRequest;
 use App\Http\Requests\UpdateTasksRequest;
 use App\Http\Resources\TaskResource;
@@ -59,5 +60,17 @@ class TasksController extends Controller
         $task = Tasks::all();
         $result = TaskResource::collection($task);
         return response()->json($result);
+    }
+
+    /*
+     * Method post ./api/data/task validation on DestroyTasksRequest
+     * 'id' => 'required', 'title' => 'required', 'description' => 'required'
+     * id must belong to user
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(DestroyTasksRequest $request){
+        Tasks::DeleteFromIdTask($request->id);
+        return $this->task();
     }
 }

@@ -16,12 +16,19 @@
             </div>
         </header>
         <div class="container">
+
             <modal title="login">
                 <login></login>
             </modal>
+
             <modal title="task">
                 <task></task>
             </modal>
+
+            <modal title="tasknew">
+                <tasknew></tasknew>
+            </modal>
+
             <test></test>
         </div>
     </body>

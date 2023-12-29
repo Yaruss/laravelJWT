@@ -27,7 +27,6 @@ export default {
                     console.log(d);
                     axios(d)
                         .then((response) => {
-                            console.log(1)
                             parent[d.Ok] = d.fnOk(parent, response.data);
                             parent[d.Er] = {};
                         })

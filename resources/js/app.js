@@ -31,5 +31,8 @@ app.component('login', login);
 import task from './component/task.vue'
 app.component('task', task);
 
+import tasknew from './component/taskNew.vue'
+app.component('tasknew', tasknew);
+
 app.use(store);
 app.mount('#app');
