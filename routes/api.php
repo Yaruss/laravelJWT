@@ -41,7 +41,8 @@ Route::group([
 ], function ($router) {
 
     Route::get('/task', [TasksController::class, 'task']);
-    Route::get('/task/{id}', [TasksController::class, 'taskPage']);
+    Route::get('/task/{id}', [TasksController::class, 'taskById']);
+    Route::get('/task/page{page}', [TasksController::class, 'taskPage']);
     Route::put('/task', [TasksController::class, 'store']);
     Route::post('/task', [TasksController::class, 'update']);
     Route::delete('/task', [TasksController::class, 'destroy']);

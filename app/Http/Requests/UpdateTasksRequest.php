@@ -2,16 +2,19 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\TasksTraits;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTasksRequest extends FormRequest
 {
+    use TasksTraits;
     /**
      * Determine if the user is authorized to make this request.
+     * validate id if true then update data input any fild
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->isIdTaskEqualsIdUser();
     }
 
     /**

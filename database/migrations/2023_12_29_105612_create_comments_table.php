@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->text('comment');
 
-            $table->foreignId('task_id')->references('id')->on('tasks');
+            $table->foreignId('task_id')->constrained()->onDelete('cascade');
         });
     }
 

@@ -1,9 +1,9 @@
 <template>
     <form v-if="!login">
         <div class="form-group my-2">
-            <label>Email address</label>
+            <label>Email address or name</label>
             <input class="form-control" placeholder="email" v-model="email">
-            <small class="form-text text-muted">Enter email</small>
+            <small class="form-text text-muted">Enter email or name</small>
         </div>
         <div class="form-group my-4">
             <label>Password</label>

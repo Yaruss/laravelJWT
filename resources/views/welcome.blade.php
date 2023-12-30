@@ -9,27 +9,36 @@
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
     </head>
-    <body id="app">
-        <header class="p-3 mb-3 border-bottom">
+    <body>
+        <div id="app">
+            <header class="p-3 mb-3 border-bottom">
+                <div class="container">
+                    <menu_top></menu_top>
+                </div>
+            </header>
             <div class="container">
-                <menu_top></menu_top>
+                <modal title="login">
+                    <login></login>
+                </modal>
+
+                <modal title="task">
+                    <task></task>
+                </modal>
+
+                <modal title="tasknew">
+                    <tasknew></tasknew>
+                </modal>
+
+                <modal title="taskupdate">
+                    <taskupdate></taskupdate>
+                </modal>
+
+                <modal title="confirmation">
+                    <confirmation></confirmation>
+                </modal>
+
+                <test></test>
             </div>
-        </header>
-        <div class="container">
-
-            <modal title="login">
-                <login></login>
-            </modal>
-
-            <modal title="task">
-                <task></task>
-            </modal>
-
-            <modal title="tasknew">
-                <tasknew></tasknew>
-            </modal>
-
-            <test></test>
         </div>
     </body>
 </html>

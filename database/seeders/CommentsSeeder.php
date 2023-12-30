@@ -14,8 +14,6 @@ class CommentsSeeder extends Seeder
      */
     public function run(): void
     {
-        Comments::factory(100)->create([
-            'task_id' => Tasks::all()->random()->id
-        ]);
+        Comments::factory(100)->create();
     }
 }

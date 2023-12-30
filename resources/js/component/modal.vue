@@ -7,7 +7,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <slot></slot>
+                    <div v-if="$root.islogin">
+                        <slot></slot>
+                    </div>
+                    <div v-else>
+                        <login></login>
+                    </div>
                 </div>
             </div>
         </div>

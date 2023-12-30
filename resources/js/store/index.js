@@ -7,6 +7,9 @@ export default createStore({
         login:{},
 
         task:{},
+        taskupdate:{},
+        confirmation:{},
+        comment:{},
     },
     actions: {
         login(context, payload){
@@ -30,6 +33,12 @@ export default createStore({
         SET_LOGIN_ERROR(state, payload){
             state.token={};
             return state.login=Object.assign(state.login, {error:payload, login:false})
+        },
+        SET_CONFIRMAION(state, paylod){
+            return state.confirmation=Object.assign(state.confirmation, paylod);
+        },
+        SET_TASKUPDATE(state, paylod){
+            return state.taskupdate=Object.assign(state.taskupdate, paylod);
         }
     }
 });

@@ -34,5 +34,14 @@ app.component('task', task);
 import tasknew from './component/taskNew.vue'
 app.component('tasknew', tasknew);
 
+import taskupdate from './component/taskUpdate.vue'
+app.component('taskupdate', taskupdate);
+
+import commentnew from './component/commentNew.vue'
+app.component('commentnew', commentnew);
+
+import confirmation from './component/actionConfirmation.vue'
+app.component('confirmation', confirmation);
+
 app.use(store);
 app.mount('#app');

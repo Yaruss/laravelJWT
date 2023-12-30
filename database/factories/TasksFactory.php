@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,8 @@ class TasksFactory extends Factory
         return [
             'title' =>  fake()->name(),
             'description' => fake()->text(),
+            'user_id' => User::all()->random()->id,
+            //'completed_date' => null
         ];
     }
 }

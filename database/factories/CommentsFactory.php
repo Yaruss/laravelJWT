@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Tasks;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class CommentsFactory extends Factory
     public function definition(): array
     {
         return [
-            'comment' => fake()->text()
+            'comment' => fake()->text(),
+            'task_id' => Tasks::all()->random()->id
         ];
     }
 }

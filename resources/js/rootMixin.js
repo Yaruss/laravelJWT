@@ -6,6 +6,16 @@ export default {
         }
     },
     methods: {
+        localeDate(d){
+            return (new Date(d*1000)).toLocaleString();
+        },
+        anyFind(item, key, val){
+            if(Array.isArray(item)) {
+                return item.find((i)=> {
+                    return i[key]==val;
+                });
+            }
+        },
         stdQuery(parent, data){
             return {
                 defData:{

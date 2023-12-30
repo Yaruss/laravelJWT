@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use function PHPUnit\Framework\isNull;
 
-class TaskResource extends JsonResource
+class TaskWithCommentsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,7 +21,8 @@ class TaskResource extends JsonResource
             'description' => $this->description,
             'completed' => $this->completed,
             'created_at' => $this->created_at->format('U'),
-            'completed_date' => is_null($this->completed_date) ? 0 : $this->completed_date->format('U')
+            'completed_date' => is_null($this->completed_date) ? 0 : $this->completed_date->format('U'),
+            'comments' => CommentsResource::collection($this->comments)
         ];
     }
 }
