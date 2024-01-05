@@ -13,7 +13,7 @@
                 <h5 class="mb-1">{{i.title}}</h5>
                 <small>
                     <span class="bi bi-patch-plus"> &nbsp; {{$root.localeDate(i.created_at)}}</span><br>
-                    <span class="bi bi-check-all _bi-arrow-repeat" v-if="i.completed_date>0"> &nbsp; {{$root.localeDate(i.completed_date)}}</span>
+                    <span class="bi bi-check-all _bi-arrow-repeat" v-if="i.completed"> &nbsp; {{$root.localeDate(i.completed_date)}}</span>
                 </small>
             </div>
             <p class="mb-1">{{i.description}}</p>
@@ -62,14 +62,17 @@
                 this.$root.$store.commit('SET_CONFIRMAION',{message:'Delete task?', myevent:()=>this.taskDelCoplite(i)});
             },
             taskDelCoplite(i){
-                console.log('compite',i);
-                this.stdData.get({method:'delete', data:{id:i.id}})
+                this.stdData.get({
+                    method:'delete',
+                    data:{id:i.id},
+                    fnOk:$t=>$t['item'].filter((e)=>e.id!=i.id)
+                })
             },
             changeCompleted(i){
                 i.completed=!i.completed;
                 this.itemSelect=i;
                 this.stdData.get({
-                    method:'post',
+                    method:'put',
                     Ok:'itemSelect',
                     data:{id:i.id, completed: i.completed},
                     fnOk:(t,v)=>Object.assign(i, v),

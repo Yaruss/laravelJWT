@@ -33,7 +33,6 @@ class TasksController extends Controller
      */
     public function taskById($id){
         $task = Tasks::GetTaskFromId($id);
-        //if($task->user_id==Auth::user()->id)
         $result = new TaskWithCommentsResource($task);
         return response()->json($result);
     }
@@ -51,13 +50,18 @@ class TasksController extends Controller
 
     /*
      * Method put ./api/data/task validation on StoreTasksRequest
-     * 'id' => 'required', 'title' => 'required', 'description' => 'required'
-     * id must belong to user
+     * 'title' => 'required', 'description' => 'required'
      *
-     * @return \Illuminate\Http\JsonResponse tasks
+     *
+     * @return \Illuminate\Http\JsonResponse task
      */
     public function store(StoreTasksRequest $request){
-        return $this->task();
+        $task = new Tasks;
+        $task->title=$request->input('title');
+        $task->description=$request->input('description');
+        $task->user_id=Auth::user()->id;
+        $task->save();
+        return $this->taskById($task->id);
     }
 
     /*
@@ -70,22 +74,22 @@ class TasksController extends Controller
      */
     public function update(UpdateTasksRequest $request){
         $fild_update = Array();
-        if(isset($request->completed)){
+        if($request->has('completed')){
             $fild_update['completed']=$request->completed;
             //$fild_update['completed_date']='NOW()';
             $fild_update['completed_date']=Carbon::now();
         }
-        if(isset($request->title)){
+        if($request->has('title')){
             $fild_update['title']=$request->title;
         }
-        if(isset($request->description)){
+        if($request->has('description')){
             $fild_update['description']=$request->description;
         }
         if(count($fild_update)>0) {
             Tasks::FindFromIdUpdate($request->id, $fild_update);
             return $this->taskById($request->id);
         }
-        return response()->json(['error'=>'Not info update'], 400);
+        return response()->json(['error'=>'Not update'], 400);
     }
 
     /*
@@ -97,8 +101,9 @@ class TasksController extends Controller
      * @return \Illuminate\Http\JsonResponse tasks
      */
     public function destroy(DestroyTasksRequest $request){
-        //Comments::DeleteFromIdTask($request->id);
-        Tasks::DeleteFromIdTask($request->id);
-        return $this->task();
+        if(Tasks::DeleteFromIdTask($request->id)) {
+            return response()->json(['delete'=>'ok'], 200);
+        }
+        return  response()->json(['delete'=>'false'], 400);
     }
 }

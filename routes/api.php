@@ -43,13 +43,10 @@ Route::group([
     Route::get('/task', [TasksController::class, 'task']);
     Route::get('/task/{id}', [TasksController::class, 'taskById']);
     Route::get('/task/page{page}', [TasksController::class, 'taskPage']);
-    Route::put('/task', [TasksController::class, 'store']);
-    Route::post('/task', [TasksController::class, 'update']);
+    Route::post('/task', [TasksController::class, 'store']);
+    Route::put('/task', [TasksController::class, 'update']);
     Route::delete('/task', [TasksController::class, 'destroy']);
 
-    Route::get('/comment', [TasksController::class, 'comment']);
-    Route::get('/comment/{id}', [TasksController::class, 'commentPage']);
-    Route::put('/comment', [TasksController::class, 'store']);
-    Route::post('/comment', [TasksController::class, 'update']);
-    Route::delete('/comment', [TasksController::class, 'destroy']);
+    Route::get('/comment/{task_id}', [TasksController::class, 'comment']);
+    Route::post('/comment', [TasksController::class, 'store']);
 });

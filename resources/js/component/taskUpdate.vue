@@ -23,7 +23,7 @@
     }
     const data ={
         url:'/api/data/task',
-        method:'post'
+        method:'put'
     };
 
     export default {

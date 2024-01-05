@@ -2,16 +2,18 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\TasksTraits;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCommentsRequest extends FormRequest
+class GetComments extends FormRequest
 {
+    use TasksTraits;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->isIdTaskEqualsIdUser();
     }
 
     /**

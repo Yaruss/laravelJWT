@@ -16,6 +16,7 @@ class Tasks extends Model
 
     protected $fillable = [
         'id',
+        'user_id',
         'title',
         'description',
         'completed',
@@ -25,26 +26,44 @@ class Tasks extends Model
     use HasFactory;
 
     public function comments(): HasMany {
-        return $this->hasMany(Comments::class, 'task_id', 'id')
-            ;//->withPivot('comment');
+        return $this->hasMany(Comments::class, 'task_id', 'id');
+            //->withPivot('comment');
     }
     public function scopeGetAllTaskUserAuth($query){
-        return $query->where('user_id', Auth::user()->id)->get();
+        return $query
+            ->UserAuth()
+            ->get();
     }
     public function scopeGetIdUserFormIdTask($query, $id){
-        return $query->select('user_id')->find($id)->user_id;
+        $result = $query
+            ->UserAuth()
+            ->select('user_id')
+            ->find($id);
+        if($result !== null){
+            return $result->user_id;
+        }
+        return 0;
     }
     public function scopeDeleteFromIdTask($query, $id){
-        $query->where('id', $id)->delete();
+        return $query
+            ->UserAuth()
+            ->where('id', $id)
+            ->delete();
     }
     public function scopeFindFromIdUpdate($query, $id, $update_data){
-        return $query->find($id)->update($update_data);
+        return $query
+            ->UserAuth()
+            ->find($id)
+            ->update($update_data);
     }
     public function scopeGetTaskFromId($query, $id){
         return $query
-            ->with('comments')
+            ->UserAuth()
             ->where('id', $id)
-            ->where('user_id', Auth::user()->id)
+            ->with('comments')
             ->first();
+    }
+    public function scopeUserAuth($query){
+        return $query->where('user_id', Auth::user()->id);
     }
 }

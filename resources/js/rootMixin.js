@@ -16,6 +16,10 @@ export default {
                 });
             }
         },
+        isError(i,n,css='alert-danger'){
+            if(n in (i='errors'in i?i.errors:{}))
+                return '<div class="alert '+css+' mb-3 mt-1 w-100">'+i[n]+'</div>';
+        },
         stdQuery(parent, data){
             return {
                 defData:{
@@ -33,8 +37,7 @@ export default {
                 data: data,
                 get: function (prop = {}) {
                     let d = this.copyObj(prop);
-                    this.setHead(d);
-                    console.log(d);
+                    this.setHead(axios);
                     axios(d)
                         .then((response) => {
                             parent[d.Ok] = d.fnOk(parent, response.data);
@@ -51,9 +54,9 @@ export default {
                 setHead: function (d) {
                     let token = this.parent.$root.$store.state.token;
                     if ('access_token' in token) {
-                        d['headers'] = 'Authorization: Bearer ' + token.access_token
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token.access_token;
                     }
-                }
+                },
             }
         },
     }
