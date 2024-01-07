@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait TasksTraits {
     public function isIdTaskEqualsIdUser(){
-        if($this->id>0)
+        if($this->input('id', 0)>0)
             return Auth::user()->id == Tasks::GetIdUserFormIdTask($this->id);
         return false;
     }

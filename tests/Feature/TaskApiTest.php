@@ -103,6 +103,55 @@ class TaskApiTest extends TestCase
             ->assertStatus(403);
     }
 
+    public function test_get_page(){
+        $response = $this->getJson('/api/data/task/page');
+        $response->assertStatus(401);
+        $this->getUser1();
+        $response = $this->getJson('/api/data/task/page');
+        $response->assertStatus(200);
+    }
+
+    public function test_get_task_from_id(){
+        $u1_id = self::$data['u1']['task_id'];
+        $u2_id = self::$data['u2']['task_id'];
+        $response = $this->getJson('/api/data/task/id?id='.$u1_id);
+        $response->assertStatus(401);
+        $this->getUser1();
+        $response = $this->getJson('/api/data/task/id?id='.$u1_id);
+        $response->assertStatus(200);
+        $response = $this->getJson('/api/data/task/id?id='.$u2_id);
+        $response->assertStatus(403);
+    }
+
+    public function test_store_comment(){
+        $u1_id = self::$data['u1']['task_id'];
+        $u2_id = self::$data['u2']['task_id'];
+        $this->getUser1();
+        $response = $this->postJson('/api/data/comment',[
+            'id'=>$u1_id,
+            'comment'=>'comment'
+        ]);
+        $response->assertStatus(200);
+
+        $response = $this->postJson('/api/data/comment',[
+            'id'=>$u2_id,
+            'comment'=>'comment'
+        ]);
+        $response->assertStatus(403);
+    }
+
+    public function test_get_comment_for_task(){
+        $u1_id = self::$data['u1']['task_id'];
+        $u2_id = self::$data['u2']['task_id'];
+        $this->getUser1();
+        $response = $this->getJson('/api/data/comment?id='.$u1_id);
+        $response->assertStatus(200);
+        $response->assertJsonFragment(["comment" => "comment"]);
+
+        $response = $this->postJson('/api/data/comment?id='.$u2_id);
+        $response->assertStatus(403);
+    }
+
     public function test_users_delete_task(){
         $this->getUser1();
         $response = $this->deleteJson('/api/data/task',['id'=>self::$data['u2']['task_id']]);

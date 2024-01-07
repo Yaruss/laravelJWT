@@ -41,12 +41,13 @@ Route::group([
 ], function ($router) {
 
     Route::get('/task', [TasksController::class, 'task']);
-    Route::get('/task/{id}', [TasksController::class, 'taskById']);
-    Route::get('/task/page{page}', [TasksController::class, 'taskPage']);
+    Route::get('/task/page', [TasksController::class, 'taskPage']);
+    Route::get('/task/id', [TasksController::class, 'taskId']);
+    Route::get('/task/idwithcomments', [TasksController::class, 'taskIdWithComments']);
     Route::post('/task', [TasksController::class, 'store']);
     Route::put('/task', [TasksController::class, 'update']);
     Route::delete('/task', [TasksController::class, 'destroy']);
 
-    Route::get('/comment/{task_id}', [TasksController::class, 'comment']);
-    Route::post('/comment', [TasksController::class, 'store']);
+    Route::get('/comment', [CommentsController::class, 'comment']);
+    Route::post('/comment', [CommentsController::class, 'store']);
 });

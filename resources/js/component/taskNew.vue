@@ -47,7 +47,7 @@
         },
         mounted() {
             this.stdData = this.$root.stdQuery(this, data);
-            console.log('mount task');
+            console.log('mount task new');
         }
     }
 </script>

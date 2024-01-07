@@ -10,6 +10,7 @@ export default createStore({
         taskupdate:{},
         confirmation:{},
         comment:{},
+        resultjson:''
     },
     actions: {
         login(context, payload){

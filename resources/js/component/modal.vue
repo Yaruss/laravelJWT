@@ -33,7 +33,6 @@
         methods: {
         },
         mounted() {
-            console.log('mount modal');
         }
     }
 </script>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DestroyTasksRequest;
+use App\Http\Requests\GetTaskByIdRequest;
+use App\Http\Requests\PagesTasksRequest;
 use App\Http\Requests\StoreTasksRequest;
 use App\Http\Requests\UpdateTasksRequest;
 use App\Http\Resources\TaskResource;
@@ -28,24 +30,58 @@ class TasksController extends Controller
 
     /*
      * Method get ./api/data/task{id} find for a task by ID
+     * 'id' => 'required' id must belong to user
      *
      * @return \Illuminate\Http\JsonResponse task
      */
-    public function taskById($id){
+    public function taskId(GetTaskByIdRequest $request){
+        return $this->taskById($request->id);
+    }
+
+    private function taskById($id){
         $task = Tasks::GetTaskFromId($id);
+        $result = new TaskResource($task);
+        return response()->json($result);
+    }
+    /*
+     * Method get ./api/data/task{id} find for a task by ID
+     * 'id' => 'required' id must belong to user
+     *
+     * @return \Illuminate\Http\JsonResponse task With Comments
+     */
+    public function taskIdWithComments(GetTaskByIdRequest $request){
+        $task = Tasks::GetTaskFromId($request->id);
         $result = new TaskWithCommentsResource($task);
         return response()->json($result);
     }
 
     /*
-     * Method get ./api/data/task{id} select 20 task on num page id
+     * Method get ./api/data/task/page if the values are given, return the first 2 tasks
+     * fild limit set count item on page
+     * fild page set num page
+     * fild order name in tables
+     * fild ascdesc sort default asc
      *
-     * @return \Illuminate\Http\JsonResponse tasks
+     * @return \Illuminate\Http\JsonResponse array [count, page, limit, tasks]
      */
-    public function taskPage(){
-        $task = Tasks::all();
-        $result = TaskResource::collection($task);
-        return response()->json($result);
+    public function taskPage(PagesTasksRequest $request){
+        $all = Tasks::UserAuth();
+
+        $count = $all->count('id');
+
+        $all
+            ->orderBy($request->order, $request->ascdesc)
+            ->skip($request->page * $request->limit)
+            ->limit($request->limit);
+
+        $page = [
+            'count' => $count,
+            'page' => $request->page,
+            'limit' => $request->limit,
+            'tasks' => TaskResource::collection($all->get())
+        ];
+
+        return response()->json($page);
     }
 
     /*
@@ -70,7 +106,7 @@ class TasksController extends Controller
      * update any fild title, completed, description
      * set new date in completed_data if set comleted true
      *
-     * @return \Illuminate\Http\JsonResponse tasks
+     * @return \Illuminate\Http\JsonResponse task
      */
     public function update(UpdateTasksRequest $request){
         $fild_update = Array();
@@ -98,11 +134,11 @@ class TasksController extends Controller
      * id must belong to user
      * deleted task and comments
      *
-     * @return \Illuminate\Http\JsonResponse tasks
+     * @return \Illuminate\Http\JsonResponse true or false
      */
     public function destroy(DestroyTasksRequest $request){
         if(Tasks::DeleteFromIdTask($request->id)) {
-            return response()->json(['delete'=>'ok'], 200);
+            return response()->json(['delete'=>'true'], 200);
         }
         return  response()->json(['delete'=>'false'], 400);
     }

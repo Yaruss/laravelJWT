@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Traits\TasksTraits;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCommentsRequest extends FormRequest
+class GetTaskByIdRequest extends FormRequest
 {
     use TasksTraits;
     /**
@@ -25,7 +25,7 @@ class StoreCommentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'comment' => 'required',
+            //
         ];
     }
 }

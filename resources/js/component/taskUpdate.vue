@@ -34,7 +34,6 @@
         },
         methods: {
             taskUpdate(){
-                console.log('send update')
                 this.stdData.get({
                     data:this.item,
                     fnOk:(t,v)=>Object.assign(t.item, v),
@@ -44,7 +43,7 @@
         mounted() {
             this.$store.state.taskupdate=set;
             this.stdData = this.$root.stdQuery(this, data);
-            console.log('mount taskUpdate');
+            console.log('mount task Update');
         }
     }
 </script>

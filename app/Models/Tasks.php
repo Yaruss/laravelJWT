@@ -29,6 +29,9 @@ class Tasks extends Model
         return $this->hasMany(Comments::class, 'task_id', 'id');
             //->withPivot('comment');
     }
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    }
     public function scopeGetAllTaskUserAuth($query){
         return $query
             ->UserAuth()

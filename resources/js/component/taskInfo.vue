@@ -25,7 +25,7 @@
         mounted() {
             this.$store.state.task=set;
             this.stdData = this.$root.stdQuery(this, data);
-            console.log('mount task');
+            console.log('mount task info');
         }
     }
 </script>

@@ -40,7 +40,6 @@
         },
         mounted() {
             this.$store.state.login=data;
-            console.log('mount login');
         }
     }
 </script>

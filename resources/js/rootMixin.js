@@ -40,6 +40,7 @@ export default {
                     this.setHead(axios);
                     axios(d)
                         .then((response) => {
+                            parent.$root.$store.state.resultjson=response.data;
                             parent[d.Ok] = d.fnOk(parent, response.data);
                             parent[d.Er] = {};
                         })

@@ -37,6 +37,10 @@
                     <confirmation></confirmation>
                 </modal>
 
+                <modal title="commentnew">
+                    <commentnew></commentnew>
+                </modal>
+
                 <test></test>
             </div>
         </div>
