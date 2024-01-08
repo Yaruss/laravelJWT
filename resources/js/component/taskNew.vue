@@ -41,7 +41,7 @@
                     data,
                     fnOk:($t,$v)=>{
                         $t.add=!$t.add;
-                        $t.$store.state.task.item.push($v);
+                        $t.$store.state.task.update();
                     }});
             }
         },

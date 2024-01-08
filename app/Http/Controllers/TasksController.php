@@ -9,7 +9,6 @@ use App\Http\Requests\StoreTasksRequest;
 use App\Http\Requests\UpdateTasksRequest;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskWithCommentsResource;
-use App\Models\Comments;
 use App\Models\Tasks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +17,7 @@ use function Symfony\Component\Console\Input\complete;
 class TasksController extends Controller
 {
     /*
-     * Method get ./api/data/task select all task
+     * Method get ./api/data/task select all task user
      *
      * @return \Illuminate\Http\JsonResponse tasks
      */
@@ -29,7 +28,7 @@ class TasksController extends Controller
     }
 
     /*
-     * Method get ./api/data/task{id} find for a task by ID
+     * Method get ./api/data/task/id find for a task by ID
      * 'id' => 'required' id must belong to user
      *
      * @return \Illuminate\Http\JsonResponse task
@@ -44,7 +43,7 @@ class TasksController extends Controller
         return response()->json($result);
     }
     /*
-     * Method get ./api/data/task{id} find for a task by ID
+     * Method get ./api/data/idwithcomments find for a task by ID
      * 'id' => 'required' id must belong to user
      *
      * @return \Illuminate\Http\JsonResponse task With Comments
@@ -57,9 +56,9 @@ class TasksController extends Controller
 
     /*
      * Method get ./api/data/task/page if the values are given, return the first 2 tasks
-     * fild limit set count item on page
-     * fild page set num page
-     * fild order name in tables
+     * fild limit set count item on page default 2
+     * fild page set num page default 0
+     * fild order name in tables default id
      * fild ascdesc sort default asc
      *
      * @return \Illuminate\Http\JsonResponse array [count, page, limit, tasks]
@@ -85,11 +84,11 @@ class TasksController extends Controller
     }
 
     /*
-     * Method put ./api/data/task validation on StoreTasksRequest
+     * Method post ./api/data/task validation on StoreTasksRequest
      * 'title' => 'required', 'description' => 'required'
      *
      *
-     * @return \Illuminate\Http\JsonResponse task
+     * @return \Illuminate\Http\JsonResponse new task
      */
     public function store(StoreTasksRequest $request){
         $task = new Tasks;
@@ -101,7 +100,7 @@ class TasksController extends Controller
     }
 
     /*
-     * Method post ./api/data/task validation on UpdateTasksRequest
+     * Method put ./api/data/task validation on UpdateTasksRequest
      * 'id' => 'required' id must belong to user
      * update any fild title, completed, description
      * set new date in completed_data if set comleted true
@@ -129,7 +128,7 @@ class TasksController extends Controller
     }
 
     /*
-     * Method post ./api/data/task validation on DestroyTasksRequest
+     * Method delete ./api/data/task validation on DestroyTasksRequest
      * 'id' => 'required',
      * id must belong to user
      * deleted task and comments

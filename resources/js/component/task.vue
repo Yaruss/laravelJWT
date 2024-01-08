@@ -3,7 +3,7 @@
         <button type="button" class="btn btn-outline-secondary" @click="this.ascdesc=this.ascdesc=='asc'?'desc':'asc';updatePage()">
             <i class="bi" :class="{'bi-arrow-down':ascdesc=='asc', 'bi-arrow-up':ascdesc=='desc'}"></i>
         </button>
-        <select class="form-select" id="inputGroupSelect01" aria-label="Example select with button addon" v-model="order" @change="updatePage()">
+        <select class="form-select" v-model="order" @change="updatePage()">
             <option value="id">Id</option>
             <option value="title">Title</option>
             <option value="description">Description</option>
@@ -99,7 +99,10 @@
                 this.stdData.get({
                     method:'delete',
                     data:{id:i.id},
-                    fnOk:$t=>$t['item'].filter((e)=>e.id!=i.id)
+                    fnOk:t=>{
+                        t.updatePage()
+                        //return t.item.filter((e)=>e.id!=i.id)
+                    }
                 })
             },
             changeCompleted(i){
@@ -121,12 +124,12 @@
             updatePage(data={page:this.page,limit:this.limit,order:this.order,ascdesc:this.ascdesc}){
                 var get=[];
                 Object.entries(data).forEach(([key, value]) => get.push(key+"="+value));
-                console.log(get.join('&'));
                 this.taskAll(get.join('&'))
             }
         },
         mounted() {
             this.$store.state.task=set;
+            set.update=this.updatePage;
             this.stdData = this.$root.stdQuery(this, data);
             console.log('mount task');
             this.taskAll();
