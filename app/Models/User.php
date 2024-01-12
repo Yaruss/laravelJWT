@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,7 +51,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): mixed
     {
         return $this->getKey();
     }
@@ -60,20 +61,29 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
 
-    public function scopeFinFromEmailOrName($query, $mail, $password){
+    /**
+     * Return a model User is find by name or email
+     *
+     * @param Builder $query
+     * @param string $mail
+     * @param string $password
+     *
+     * @return  BuildsQueries|Illuminate\Database\Eloquent\Model|null|object
+     */
+    public function scopeFinFromEmailOrName(Builder $query, string $mail, string $password): mixed
+    {
         $password = Hash::make($password);
         return $query
             ->select('email')
-            ->where(function($query) use ($mail){
-                $query->where('email',$mail)
-                    ->orWhere('name',$mail);
+            ->where(function ($query) use ($mail) {
+                $query->where('email', $mail)
+                    ->orWhere('name', $mail);
             })
-            //->where('password', $password)
             ->first();
     }
 }

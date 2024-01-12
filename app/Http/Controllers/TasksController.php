@@ -21,7 +21,8 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse tasks
      */
-    public function task(){
+    public function task()
+    {
         $task = Tasks::GetAllTaskUserAuth();
         $result = TaskResource::collection($task);
         return response()->json($result);
@@ -33,22 +34,26 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse task
      */
-    public function taskId(GetTaskByIdRequest $request){
+    public function taskId(GetTaskByIdRequest $request)
+    {
         return $this->taskById($request->id);
     }
 
-    private function taskById($id){
+    private function taskById($id)
+    {
         $task = Tasks::GetTaskFromId($id);
         $result = new TaskResource($task);
         return response()->json($result);
     }
+
     /*
      * Method get ./api/data/idwithcomments find for a task by ID
      * 'id' => 'required' id must belong to user
      *
      * @return \Illuminate\Http\JsonResponse task With Comments
      */
-    public function taskIdWithComments(GetTaskByIdRequest $request){
+    public function taskIdWithComments(GetTaskByIdRequest $request)
+    {
         $task = Tasks::GetTaskFromId($request->id);
         $result = new TaskWithCommentsResource($task);
         return response()->json($result);
@@ -63,7 +68,8 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse array [count, page, limit, tasks]
      */
-    public function taskPage(PagesTasksRequest $request){
+    public function taskPage(PagesTasksRequest $request)
+    {
         $all = Tasks::UserAuth();
 
         $count = $all->count('id');
@@ -90,11 +96,12 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse new task
      */
-    public function store(StoreTasksRequest $request){
+    public function store(StoreTasksRequest $request)
+    {
         $task = new Tasks;
-        $task->title=$request->input('title');
-        $task->description=$request->input('description');
-        $task->user_id=Auth::user()->id;
+        $task->title = $request->input('title');
+        $task->description = $request->input('description');
+        $task->user_id = Auth::user()->id;
         $task->save();
         return $this->taskById($task->id);
     }
@@ -107,24 +114,25 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse task
      */
-    public function update(UpdateTasksRequest $request){
-        $fild_update = Array();
-        if($request->has('completed')){
-            $fild_update['completed']=$request->completed;
+    public function update(UpdateTasksRequest $request)
+    {
+        $fild_update = array();
+        if ($request->has('completed')) {
+            $fild_update['completed'] = $request->completed;
             //$fild_update['completed_date']='NOW()';
-            $fild_update['completed_date']=Carbon::now();
+            $fild_update['completed_date'] = Carbon::now();
         }
-        if($request->has('title')){
-            $fild_update['title']=$request->title;
+        if ($request->has('title')) {
+            $fild_update['title'] = $request->title;
         }
-        if($request->has('description')){
-            $fild_update['description']=$request->description;
+        if ($request->has('description')) {
+            $fild_update['description'] = $request->description;
         }
-        if(count($fild_update)>0) {
+        if (count($fild_update) > 0) {
             Tasks::FindFromIdUpdate($request->id, $fild_update);
             return $this->taskById($request->id);
         }
-        return response()->json(['error'=>'Not update'], 400);
+        return response()->json(['error' => 'Not update'], 400);
     }
 
     /*
@@ -135,10 +143,11 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse true or false
      */
-    public function destroy(DestroyTasksRequest $request){
-        if(Tasks::DeleteFromIdTask($request->id)) {
-            return response()->json(['delete'=>'true'], 200);
+    public function destroy(DestroyTasksRequest $request)
+    {
+        if (Tasks::DeleteFromIdTask($request->id)) {
+            return response()->json(['delete' => 'true'], 200);
         }
-        return  response()->json(['delete'=>'false'], 400);
+        return response()->json(['delete' => 'false'], 400);
     }
 }

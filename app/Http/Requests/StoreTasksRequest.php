@@ -26,16 +26,17 @@ class StoreTasksRequest extends FormRequest
             'description' => 'required'
         ];
     }
+
     /**
      * Get the error messages for the defined validation rules.
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'title' => 'A title is required',
-            'description'  => 'A description is required',
+            'description' => 'A description is required',
         ];
     }
 }

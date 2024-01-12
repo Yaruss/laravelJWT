@@ -34,9 +34,10 @@ class LoginUserRequest extends FormRequest
      *
      * @return array
      */
-    protected function passedValidation() {
+    protected function passedValidation(): void
+    {
         $user = User::FinFromEmailOrName($this->input('email'), $this->input('password'));
-        if($user->exists()){
+        if ($user->exists()) {
             $this->merge([
                 'email' => $user->email
             ]);

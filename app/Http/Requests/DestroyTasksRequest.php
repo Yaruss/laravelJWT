@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class DestroyTasksRequest extends FormRequest
 {
     use TasksTraits;
+
     /**
      * Determine if the user is authorized to make this request.
      * validate id if true then update data input any fild

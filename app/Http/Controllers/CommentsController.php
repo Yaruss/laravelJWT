@@ -16,7 +16,8 @@ class CommentsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse comments
      */
-    public function comment(GetComments $request){
+    public function comment(GetComments $request)
+    {
         $comment = Comments::GetCommentFromTaskId($request->id);
         $request = CommentsResource::collection($comment);
         return response()->json($request);
@@ -29,12 +30,13 @@ class CommentsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse new task
      */
-    public function store(StoreCommentsRequest $request){
+    public function store(StoreCommentsRequest $request)
+    {
         $comment = new Comments();
         $comment->task_id = $request->id;
         $comment->comment = $request->comment;
         $comment->save();
-        $result=new CommentsResource($comment);
+        $result = new CommentsResource($comment);
         return response()->json($result);
     }
 }

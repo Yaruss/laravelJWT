@@ -26,26 +26,29 @@ class PagesTasksRequest extends FormRequest
             //
         ];
     }
+
     /**
      * Get the validated data with default values.
      *
      * @return array
      */
-    public function validateResolved()
+    public function validateResolved(): void
     {
         $this->merge([
             'order' => $this->isOrder(),
-            'ascdesc' => strtolower($this->input('ascdesc'))=='asc'?'ASC':'DESC',
+            'ascdesc' => strtolower($this->input('ascdesc', 'asc')) == 'asc' ? 'ASC' : 'DESC',
 
             'page' => $this->input('page', 0),
-            'limit'=> max(min($this->input('limit', 2), 100),1)
+            'limit' => max(min($this->input('limit', 2), 100), 1)
         ]);
     }
-    private function isOrder(){
+
+    private function isOrder(): string
+    {
         $name = $this->input('order');
         $task = new Tasks();
         $columns = $task->getTableColumns();
-        if(in_array($name,$columns)){
+        if (in_array($name, $columns)) {
             return $name;
         }
         return 'id';
