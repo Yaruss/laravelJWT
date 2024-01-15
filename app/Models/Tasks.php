@@ -93,11 +93,11 @@ class Tasks extends Model
      *
      * @param Builder $query
      * @param int $id task_id
-     * @param DatETime $update_data
+     * @param array $update_data
      *
      * @return  int
      */
-    public function scopeFindFromIdUpdate(Builder $query, int $id, DatETime $update_data): int
+    public function scopeFindFromIdUpdate(Builder $query, int $id, array $update_data): int
     {
         return $query
             ->UserAuth()

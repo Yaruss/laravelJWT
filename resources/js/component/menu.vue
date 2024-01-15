@@ -5,11 +5,13 @@
         </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-4" v-if="$root.islogin">
             <li><a href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal" data-bs-target="#task">Tasks</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal" data-bs-target="#tasknew">Tasks new</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark" data-bs-toggle="modal" data-bs-target="#tasknew">Tasks
+                new</a></li>
             <li><a class="nav-link px-2 link-dark" href="/">Logout</a></li>
         </ul>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-4" v-else>
-            <li><a class="nav-link px-2 link-dark" href="#" data-bs-toggle="modal" data-bs-target="#login">Login</a></li>
+            <li><a class="nav-link px-2 link-dark" href="#" data-bs-toggle="modal" data-bs-target="#login">Login</a>
+            </li>
         </ul>
     </div>
 
@@ -19,13 +21,11 @@
     export default {
         data() {
             return {
-                set:{}
+                set: {}
             };
         },
-        computed: {
-        },
-        methods: {
-        },
+        computed: {},
+        methods: {},
         mounted() {
             console.log('mount menu');
         }

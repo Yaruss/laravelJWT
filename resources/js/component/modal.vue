@@ -22,16 +22,14 @@
 
 <script>
     export default {
-        props:['title'],
+        props: ['title'],
         data() {
             return {
-                set:{}
+                set: {}
             };
         },
-        computed: {
-        },
-        methods: {
-        },
+        computed: {},
+        methods: {},
         mounted() {
         }
     }

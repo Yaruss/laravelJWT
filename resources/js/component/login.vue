@@ -21,25 +21,24 @@
     </div>
 </template>
 <script>
-    const data={
-        email:'test@test.ru',
-        password:'test',
-        error:{},
-        login:false,
+    const data = {
+        email: 'test@test.ru',
+        password: 'test',
+        error: {},
+        login: false,
     }
     export default {
         data() {
             return data;
         },
-        computed: {
-        },
+        computed: {},
         methods: {
-            send(data){
+            send(data) {
                 this.$store.dispatch('login', data);
             }
         },
         mounted() {
-            this.$store.state.login=data;
+            this.$store.state.login = data;
         }
     }
 </script>

@@ -19,30 +19,30 @@
     </div>
 </template>
 <script>
-    const data ={
-        method:'post',
-        url:'/api/data/task',
+    const data = {
+        method: 'post',
+        url: '/api/data/task',
     };
     export default {
         data() {
             return {
-                add:true,
-                item:{},
-                error:{},
-                title:'title1',
+                add: true,
+                item: {},
+                error: {},
+                title: 'title1',
                 description: 'description1',
             };
         },
-        computed: {
-        },
+        computed: {},
         methods: {
-            taskAdd(data){
+            taskAdd(data) {
                 this.stdData.get({
                     data,
-                    fnOk:($t,$v)=>{
-                        $t.add=!$t.add;
+                    fnOk: ($t, $v) => {
+                        $t.add = !$t.add;
                         $t.$store.state.task.update();
-                    }});
+                    }
+                });
             }
         },
         mounted() {

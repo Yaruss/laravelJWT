@@ -6,23 +6,22 @@
     <a class="btn btn-primary my-4 float-end" data-bs-dismiss="modal" aria-label="Close">Cancel</a>
 </template>
 <script>
-    const data={
-        message:{},
-        myevent:{}
+    const data = {
+        message: {},
+        myevent: {}
     }
     export default {
         data() {
             return data;
         },
-        computed: {
-        },
+        computed: {},
         methods: {
-            ok(){
+            ok() {
                 this.myevent();
             }
         },
         mounted() {
-            this.$store.state.confirmation=data;
+            this.$store.state.confirmation = data;
             console.log('mount confirmation');
         }
     }

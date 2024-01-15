@@ -46,6 +46,7 @@ Route::group([
     Route::get('/task/idwithcomments', [TasksController::class, 'taskIdWithComments']);
     Route::post('/task', [TasksController::class, 'store']);
     Route::put('/task', [TasksController::class, 'update']);
+    Route::patch('/task', [TasksController::class, 'changeStatus']);
     Route::delete('/task', [TasksController::class, 'destroy']);
 
     Route::get('/comment', [CommentsController::class, 'comment']);

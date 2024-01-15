@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeStatusRequest;
 use App\Http\Requests\DestroyTasksRequest;
 use App\Http\Requests\GetTaskByIdRequest;
 use App\Http\Requests\PagesTasksRequest;
@@ -11,6 +12,7 @@ use App\Http\Resources\TaskResource;
 use App\Http\Resources\TaskWithCommentsResource;
 use App\Models\Tasks;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use function Symfony\Component\Console\Input\complete;
 
@@ -21,7 +23,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse tasks
      */
-    public function task()
+    public function task(): JsonResponse
     {
         $task = Tasks::GetAllTaskUserAuth();
         $result = TaskResource::collection($task);
@@ -34,12 +36,12 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse task
      */
-    public function taskId(GetTaskByIdRequest $request)
+    public function taskId(GetTaskByIdRequest $request): JsonResponse
     {
         return $this->taskById($request->id);
     }
 
-    private function taskById($id)
+    private function taskById(int $id): JsonResponse
     {
         $task = Tasks::GetTaskFromId($id);
         $result = new TaskResource($task);
@@ -52,7 +54,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse task With Comments
      */
-    public function taskIdWithComments(GetTaskByIdRequest $request)
+    public function taskIdWithComments(GetTaskByIdRequest $request): JsonResponse
     {
         $task = Tasks::GetTaskFromId($request->id);
         $result = new TaskWithCommentsResource($task);
@@ -68,7 +70,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse array [count, page, limit, tasks]
      */
-    public function taskPage(PagesTasksRequest $request)
+    public function taskPage(PagesTasksRequest $request): JsonResponse
     {
         $all = Tasks::UserAuth();
 
@@ -96,7 +98,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse new task
      */
-    public function store(StoreTasksRequest $request)
+    public function store(StoreTasksRequest $request): JsonResponse
     {
         $task = new Tasks;
         $task->title = $request->input('title');
@@ -114,12 +116,11 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse task
      */
-    public function update(UpdateTasksRequest $request)
+    public function update(UpdateTasksRequest $request): JsonResponse
     {
         $fild_update = array();
         if ($request->has('completed')) {
             $fild_update['completed'] = $request->completed;
-            //$fild_update['completed_date']='NOW()';
             $fild_update['completed_date'] = Carbon::now();
         }
         if ($request->has('title')) {
@@ -136,14 +137,31 @@ class TasksController extends Controller
     }
 
     /*
+     * Method patch ./api/data/task find for a task by task_id
+     * 'id' => 'required' id must belong to user
+     *
+     * @param ChangeStatusRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse task
+     */
+    public function changeStatus(ChangeStatusRequest $request): JsonResponse
+    {
+        $task = Tasks::GetTaskFromId($request->id);
+        $task->completed=!$task->completed;
+        $task->completed_date = Carbon::now();
+        $task->save();
+        return $this->taskById($request->id);
+    }
+
+    /*
      * Method delete ./api/data/task validation on DestroyTasksRequest
      * 'id' => 'required',
      * id must belong to user
      * deleted task and comments
      *
-     * @return \Illuminate\Http\JsonResponse true or false
+     * @return \Illuminate\Http\JsonResponse delete: true or false
      */
-    public function destroy(DestroyTasksRequest $request)
+    public function destroy(DestroyTasksRequest $request): JsonResponse
     {
         if (Tasks::DeleteFromIdTask($request->id)) {
             return response()->json(['delete' => 'true'], 200);

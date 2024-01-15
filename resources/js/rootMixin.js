@@ -1,28 +1,27 @@
-
 export default {
     computed: {
-        islogin(){
+        islogin() {
             return this.$root.$store.state.login?.login;
         }
     },
     methods: {
-        localeDate(d){
-            return (new Date(d*1000)).toLocaleString();
+        localeDate(d) {
+            return (new Date(d * 1000)).toLocaleString();
         },
-        anyFind(item, key, val){
-            if(Array.isArray(item)) {
-                return item.find((i)=> {
-                    return i[key]==val;
+        anyFind(item, key, val) {
+            if (Array.isArray(item)) {
+                return item.find((i) => {
+                    return i[key] == val;
                 });
             }
         },
-        isError(i,n,css='alert-danger'){
-            if(n in (i='errors'in i?i.errors:{}))
-                return '<div class="alert '+css+' mb-3 mt-1 w-100">'+i[n]+'</div>';
+        isError(i, n, css = 'alert-danger') {
+            if (n in (i = 'errors' in i ? i.errors : {}))
+                return '<div class="alert ' + css + ' mb-3 mt-1 w-100">' + i[n] + '</div>';
         },
-        stdQuery(parent, data){
+        stdQuery(parent, data) {
             return {
-                defData:{
+                defData: {
                     method: 'get',
                     Ok: 'item',
                     Er: 'error',
@@ -40,7 +39,7 @@ export default {
                     this.setHead(axios);
                     axios(d)
                         .then((response) => {
-                            parent.$root.$store.state.resultjson=response.data;
+                            parent.$root.$store.state.resultjson = response.data;
                             parent[d.Ok] = d.fnOk(parent, response.data);
                             parent[d.Er] = {};
                         })

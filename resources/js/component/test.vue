@@ -24,7 +24,8 @@
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">access_token</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{state.token.access_token}}</textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1"
+                          rows="3">{{state.token.access_token}}</textarea>
             </div>
             <div class="mb-3">
                 <label for="resultjson" class="form-label">resultjson</label>
@@ -37,17 +38,14 @@
 <script>
     export default {
         data() {
-            return {
-                set:{}
-            };
+            return {}
         },
         computed: {
-            state(){
+            state() {
                 return this.$root.$store.state
             }
         },
-        methods: {
-        },
+        methods: {},
         mounted() {
             console.log('mount test');
         }

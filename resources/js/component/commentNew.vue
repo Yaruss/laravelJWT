@@ -23,33 +23,32 @@
     </form>
 </template>
 <script>
-    const set={
-        item:{},
-        error:{},
-        comment:'',
+    const set = {
+        item: {},
+        error: {},
+        comment: '',
     }
-    const data ={
-        url:'/api/data/comment',
+    const data = {
+        url: '/api/data/comment',
     };
 
     export default {
         data() {
             return set;
         },
-        computed: {
-        },
+        computed: {},
         methods: {
-            show(i){
-                this.item=i;
+            show(i) {
+                this.item = i;
                 this.stdData.get({
-                    url:'/api/data/task/idwithcomments?id='+i.id
+                    url: '/api/data/task/idwithcomments?id=' + i.id
                 });
             },
-            storeComment(data){
+            storeComment(data) {
                 this.stdData.get({
                     data,
-                    method:'post',
-                    fnOk:(t,v)=>{
+                    method: 'post',
+                    fnOk: (t, v) => {
                         console.log(v)
                         t.item.comments.push(v);
                         return t.item;
@@ -58,8 +57,8 @@
             }
         },
         mounted() {
-            this.$store.state.comment=set;
-            set.show=this.show;
+            this.$store.state.comment = set;
+            set.show = this.show;
             this.stdData = this.$root.stdQuery(this, data);
             console.log('mount Comment new');
         }
